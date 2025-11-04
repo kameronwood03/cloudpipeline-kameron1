@@ -1,2 +1,2 @@
-#  “CloudTopia CI/CD Pipeline – kameron”
+# CloudTopia CI/CD Pipeline – kameron
 "CI/CD test"
