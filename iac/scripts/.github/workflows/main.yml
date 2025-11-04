@@ -1,1 +1,31 @@
+name: IaC CI
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        # Initialize Terraform but skip backend configuration since we only need validation
+        run: terraform init -backend=false
+        working-directory: ./iac
+
+      - name: Terraform Format Check
+        # Check that the file is correctly formatted
+        run: terraform fmt -check
+        working-directory: ./iac
+
+      - name: Terraform Validate
+        # Check that the Terraform code is syntactically valid for Azure
+        run: terraform validate
+        working-directory: ./iac
